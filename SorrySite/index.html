@@ -1,63 +1,209 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Perdóname, Jorge</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Pacifico&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1b0b3f">
+  <title>Para ti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
-<section id="intro">
-  <div class="glow" id="glow"></div>
-  <h1 class="logo">JORGE<span>VI</span></h1>
-  <p class="intro-sub">Coming soon… a tu corazón</p>
-  <div class="loader"><i id="loadBar"></i></div>
-  <p id="loadText">Cargando… 0%</p>
-  <button id="startBtn" class="btn start hidden">Presiona para empezar</button>
-</section>
+<!-- Iconos reutilizables -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="gPink" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffd23f"/>
+      <stop offset="1" stop-color="#ff2e93"/>
+    </linearGradient>
+    <linearGradient id="gGold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff7b0"/>
+      <stop offset=".5" stop-color="#ffd23f"/>
+      <stop offset="1" stop-color="#ff8a3d"/>
+    </linearGradient>
+    <symbol id="ico-heart" viewBox="0 0 100 100">
+      <path d="M50 90C10 60 4 38 16 22 28 8 44 14 50 28 56 14 72 8 84 22 96 38 90 60 50 90Z" fill="url(#gPink)" stroke="#fff" stroke-width="3"/>
+    </symbol>
+    <symbol id="ico-gold" viewBox="0 0 100 100">
+      <path d="M50 90C10 60 4 38 16 22 28 8 44 14 50 28 56 14 72 8 84 22 96 38 90 60 50 90Z" fill="url(#gGold)" stroke="#fff" stroke-width="4"/>
+    </symbol>
+    <symbol id="palm" viewBox="0 0 200 400">
+      <g fill="#1b0b3f">
+        <rect x="94" y="120" width="12" height="280" rx="6"/>
+        <path d="M100 124C40 70 6 96-6 150C30 112 64 112 98 134ZM100 124C160 60 206 86 214 146C176 106 140 108 102 134ZM100 120C70 40 40 20 14 22C50 40 78 70 96 124ZM100 120C132 36 166 16 192 20C156 40 126 70 104 124ZM100 118C96 50 100 10 100 0C106 44 106 84 102 120Z"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
 
-<main id="scene" class="hidden">
+<div class="app" id="app">
+
+  <!-- FONDO -->
   <div class="stars" id="stars"></div>
-  <div class="sun" id="sun"></div>
-  <div class="layer" id="city"></div>
-  <div class="layer" id="palms"></div>
+  <div class="sun"></div>
+  <div class="city" id="city"></div>
+  <svg class="palm pl" viewBox="0 0 200 400" aria-hidden="true"><use href="#palm"/></svg>
+  <svg class="palm pr" viewBox="0 0 200 400" aria-hidden="true"><use href="#palm"/></svg>
   <div class="siren" id="siren"></div>
 
-  <header class="hud">
-    <div class="mission">Misión · Reconquistar a Jorge</div>
-    <div class="wanted" id="wanted" aria-label="Nivel de búsqueda"></div>
+  <!-- PANTALLA DE CARGA -->
+  <section id="boot">
+    <h1 class="logo">JORGE<span>VI</span></h1>
+    <div class="loader"><i id="bootBar"></i></div>
+    <p class="boot-tip" id="bootTip">Cargando…</p>
+  </section>
+
+  <!-- HUD -->
+  <header class="hud hidden" id="hud">
+    <div class="radar"><i></i></div>
+    <div class="hud-mid">
+      <span id="mTitle"></span>
+      <div class="dots" id="dots"><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+    <div class="hud-right">
+      <div class="cash" id="cash">$0</div>
+      <button class="snd" id="soundBtn" aria-label="Activar o silenciar sonido">♪</button>
+    </div>
   </header>
 
-  <section class="card" id="card">
-    <div class="card-inner">
-      <h2 class="title" id="title">Jorge</h2>
-      <p class="letter" id="letter"></p>
-      <h3 class="ask hidden" id="ask">¿Me perdonas?</h3>
-      <div class="buttons hidden" id="buttons">
-        <button id="yesBtn" class="btn yes">Sí</button>
-        <button id="noBtn" class="btn no">No</button>
+  <main class="stage hidden" id="stage">
+
+    <!-- PORTADA -->
+    <section class="screen" id="cover">
+      <p class="tag">Esto es para ti</p>
+      <h1 class="logo">JORGE<span>VI</span></h1>
+      <p class="lead">Tengo 5 misiones preparadas para ti.<br>Todas valen la pena.</p>
+      <button class="btn primary" id="btnStart">Empezar</button>
+      <button class="btn ghost hidden" id="btnContinue">Continuar donde me quedé</button>
+    </section>
+
+    <!-- REGLAS -->
+    <section class="screen" id="rules">
+      <h2>Reglas del juego</h2>
+      <ol class="rules" id="rulesList"></ol>
+      <button class="btn primary" data-next="m1">Entendido, vamos</button>
+    </section>
+
+    <!-- MISIÓN 1 -->
+    <section class="screen" id="m1">
+      <h2>Atrapa los corazones</h2>
+      <p class="lead">Los dorados valen 3. Junta 12 puntos.</p>
+      <div class="play" id="play"></div>
+      <div class="bar"><i id="bar1"></i></div>
+      <p class="count"><b id="c1">0</b> / 12</p>
+    </section>
+
+    <!-- MISIÓN 2 -->
+    <section class="screen" id="m2">
+      <h2>Arma tu Porsche</h2>
+      <p class="lead">Elige el color y escribe tu placa.</p>
+      <div class="paint-stage" id="paintStage"><div class="plate" id="plateBadge">JORGE</div></div>
+      <div class="presets" id="presets">
+        <button class="chip sel" data-preset="original">Original</button>
+        <button class="chip" data-preset="negro">Negro</button>
+        <button class="chip" data-preset="plata">Plata</button>
+        <button class="chip" data-preset="color">Color libre</button>
       </div>
-      <p class="status" id="status"></p>
+      <label class="slide">
+        <span>Tono</span>
+        <input type="range" id="hue" min="0" max="360" value="0" aria-label="Tono del color">
+      </label>
+      <label class="slide">
+        <span>Placa</span>
+        <input type="text" id="plate" maxlength="8" value="JORGE" autocomplete="off" spellcheck="false" aria-label="Placa del coche">
+      </label>
+      <button class="btn primary" id="m2Next" disabled>Guardar en el garage</button>
+    </section>
+
+    <!-- MISIÓN 3 -->
+    <section class="screen" id="m3">
+      <h2>Carrera nocturna</h2>
+      <p class="lead">Junta 10 corazones y esquiva los conos.</p>
+      <div class="race" id="race"></div>
+      <div class="pad">
+        <button class="btn ghost" id="up" aria-label="Subir de carril">▲</button>
+        <div class="race-info"><span id="lives" aria-label="Vidas"></span><span class="count"><b id="c3">0</b> / 10</span></div>
+        <button class="btn ghost" id="down" aria-label="Bajar de carril">▼</button>
+      </div>
+    </section>
+
+    <!-- MISIÓN 4 -->
+    <section class="screen" id="m4">
+      <h2>Examen de novios</h2>
+      <p class="lead" id="qn"></p>
+      <h3 class="q" id="q"></h3>
+      <div class="opts" id="opts"></div>
+      <p class="fb" id="fb"></p>
+    </section>
+
+    <!-- MISIÓN 5 -->
+    <section class="screen" id="m5">
+      <h2>Mantén presionado</h2>
+      <p class="lead">No sueltes hasta llegar al 100%.</p>
+      <div class="lines-box" id="lines"></div>
+      <button class="hold" id="hold" aria-label="Mantener presionado"><span id="pct">0%</span></button>
+    </section>
+
+    <!-- PREGUNTA FINAL -->
+    <section class="screen" id="ask">
+      <h2 class="big2">¿Me perdonas?</h2>
+      <p class="lead" id="status">Última misión.</p>
+      <div class="answers" id="answers">
+        <button class="btn yes" id="yes">Sí</button>
+        <button class="btn no" id="no">No</button>
+      </div>
+    </section>
+
+    <!-- FINAL -->
+    <section class="screen" id="win">
+      <h2 class="big2 glow">Misión cumplida</h2>
+      <div class="sign" id="sign">TE AMO</div>
+      <p class="msg" id="msg"></p>
+      <div class="stats" id="stats">
+        <div><b id="sHearts">0</b><small>corazones</small></div>
+        <div><b id="sCash">$0</b><small>ganados</small></div>
+        <div><b id="sMist">0</b><small>errores</small></div>
+      </div>
+      <div class="scratch" id="scratch">
+        <div class="prize" id="prize">
+          <small>Tu premio</small>
+          <ul id="prizeList"></ul>
+        </div>
+        <canvas id="cv"></canvas>
+      </div>
+      <p class="hint" id="hint">Rasca para ver tu premio</p>
+      <div class="row">
+        <button class="btn ghost" id="btnShare">Compartir</button>
+        <button class="btn ghost" id="again">Volver a jugar</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- CARRETERA -->
+  <div class="road">
+    <div class="lines"></div>
+    <div id="traffic"></div>
+    <div id="hero" class="hero">
+      <div id="heroCar"></div>
+      <span class="plate-tag" id="heroPlate"></span>
     </div>
-  </section>
+  </div>
 
-  <div class="road"><div class="lane" id="lane"></div></div>
-  <div id="toasts"></div>
+  <!-- MISIÓN COMPLETADA -->
+  <div id="passed" class="hidden">
+    <h2 class="passed-t">MISIÓN COMPLETADA</h2>
+    <p class="passed-s" id="pSub"></p>
+    <p class="passed-p" id="pPay"></p>
+    <button class="btn primary" id="pBtn">Continuar</button>
+  </div>
 
-  <section id="win" class="hidden">
-    <h2 class="passed">MISIÓN CUMPLIDA</h2>
-    <p class="respect">Respeto +100 · Nivel de búsqueda eliminado</p>
-    <p class="love" id="love"></p>
-    <p class="love2">Gracias por perdonarme, Jorge.</p>
-    <button id="replayBtn" class="btn small">Jugar otra vez</button>
-  </section>
-</main>
+  <canvas id="fx"></canvas>
+</div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.3/confetti.browser.min.js"></script>
 <script src="js/script.js"></script>
 </body>
 </html>
