@@ -1,0 +1,77 @@
+/* Ajustes para móvil: se carga DESPUÉS de styles.css */
+html { -webkit-text-size-adjust: 100%; font-size: clamp(19px, 5.4vw, 22px); }
+@media (min-width: 700px) { html { font-size: 18px; } }
+
+/* Carretera baja, la tarjeta ocupa casi toda la pantalla */
+.road { height: 12dvh; }
+.stage { inset: 0 0 12dvh 0; padding: 60px 8px 6px; align-items: stretch; }
+.city { bottom: 12dvh; }
+.palm { bottom: 9dvh; height: 40dvh; }
+.sun { bottom: 18dvh; }
+.hero { width: min(50vw, 250px); }
+
+/* Tarjeta central grande; si algo no cabe, hace scroll (nunca se corta) */
+.screen {
+  max-width: 600px; height: 100%; max-height: 100%;
+  padding: 18px 16px; gap: 14px;
+  overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none;
+}
+.screen::-webkit-scrollbar { display: none; }
+.screen > * { flex: none; }
+.screen::before, .screen::after { content: ""; margin: auto; } /* centra si sobra espacio */
+
+h2 { font-size: 1.8rem; }
+.lead { font-size: 1.05rem; }
+.logo { font-size: clamp(4.2rem, 24vw, 6.5rem); }
+.tag { font-size: 0.95rem; padding: 7px 16px; }
+
+/* HUD */
+.radar { width: 50px; height: 50px; }
+.hud-mid { font-size: 0.95rem; }
+.dots i { width: 32px; height: 6px; }
+.cash { font-size: 1.25rem; }
+.snd { width: 46px; height: 46px; }
+
+/* Controles táctiles grandes */
+.btn { min-height: 60px; font-size: 1.12rem; padding: 14px 32px; width: 100%; max-width: 420px; }
+.pad .btn { width: auto; min-width: 80px; }
+.row .btn { width: auto; flex: 1 1 140px; }
+.answers .btn { width: auto; max-width: none; }
+.chip { padding: 12px 18px; font-size: 1.02rem; }
+.opts button { min-height: 60px; font-size: 1.1rem; }
+.q { font-size: 1.35rem; }
+input[type="text"] { font-size: 1.2rem; padding: 13px; }
+input[type="range"] { height: 14px; }
+input[type="range"]::-webkit-slider-thumb { width: 34px; height: 34px; }
+.rules li { font-size: 1.02rem; padding: 12px 12px 12px 52px; }
+.rules li::before { width: 30px; height: 30px; margin-top: -15px; line-height: 30px; left: 11px; }
+
+/* Áreas de juego grandes */
+.play { flex: 1 1 auto; height: auto; min-height: 250px; max-height: none; }
+.heart { width: 62px; height: 62px; }
+.race { height: 38dvh; max-height: 360px; }
+#lives { font-size: 1.35rem; }
+.race-msg { font-size: 2.7rem; }
+.hold { width: 160px; height: 160px; font-size: 1.8rem; }
+.lines-box { min-height: 160px; font-size: 1.12rem; }
+.paint-stage { padding: 20px 10px 30px; }
+.plate { font-size: 0.95rem; }
+
+/* Final */
+.sign { font-size: clamp(2.4rem, 13vw, 3.4rem); }
+.msg { font-size: 1.12rem; min-height: 6.5em; }
+.stats b { font-size: 1.4rem; }
+.stats small { font-size: 0.85rem; }
+.scratch { height: 200px; }
+.prize ul { font-size: 1.02rem; }
+.hint { font-size: 0.95rem; }
+
+/* Solo en pantallas muy bajitas se ajustan espacios, NO las letras */
+@media (max-height: 620px) {
+  .sun { display: none; }
+  .screen { gap: 10px; padding: 12px 14px; }
+  .btn { min-height: 54px; }
+  .hold { width: 130px; height: 130px; }
+  .lines-box { min-height: 120px; }
+  .play { min-height: 200px; }
+}
